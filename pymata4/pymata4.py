@@ -18,19 +18,20 @@
  Based on the DHTNew library - https://github.com/RobTillaart/DHTNew
 """
 
-from collections import deque
-import serial
-# noinspection PyPackageRequirements
-from serial.tools import list_ports
-# noinspection PyPackageRequirementscd
-from serial.serialutil import SerialException
 import socket
 import sys
 import threading
 import time
+from collections import deque
 
-from pymata4.pin_data import PinData
-from pymata4.private_constants import PrivateConstants
+import serial
+# noinspection PyPackageRequirementscd
+from serial.serialutil import SerialException
+# noinspection PyPackageRequirements
+from serial.tools import list_ports
+
+from .pin_data import PinData
+from .private_constants import PrivateConstants
 
 
 # noinspection PyPep8
@@ -240,7 +241,8 @@ class Pymata4(threading.Thread):
                 # com_port specified - set com_port and baud rate
                 try:
                     self._manual_open()
-                except Exception:
+                except Exception as ex:
+                    print(str(ex))
                     if self.shutdown_on_exception:
                         self.shutdown()
 
@@ -1718,7 +1720,8 @@ class Pymata4(threading.Thread):
         if not self.ip_address:
             try:
                 result = self.serial_port.write(send_message)
-            except SerialException:
+            except SerialException as ex:
+                print(str(ex))
                 if self.shutdown_on_exception:
                     self.shutdown()
                 raise RuntimeError('write fail in _send_command')
