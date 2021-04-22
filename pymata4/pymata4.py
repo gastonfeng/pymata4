@@ -46,7 +46,7 @@ class Pymata4(threading.Thread):
 
     # noinspection PyPep8,PyPep8,PyPep8
     def __init__(self, com_port=None, baud_rate=115200,
-                 arduino_instance_id=1, arduino_wait=4,
+                 arduino_instance_id=1, arduino_wait=1,
                  sleep_tune=0.000001,
                  shutdown_on_exception=True, ip_address=None,
                  ip_port=None):
